@@ -18,15 +18,15 @@ define Package/wp_module
 endef
 
 define Package/wp_module/description
-  A simple module to modify default settings on first boot.
+A simple module to modify default settings on first boot.
 endef
 
 define Build/Compile
-  # Nothing to compile
 endef
 
 define Package/wp_module/install
-  $(INSTALL_DIR) $(1)/etc/init.d
-  $(INSTALL_BIN) ./files/wp-simple-init.sh $(1)/etc/init.d/wp-simple-init
+        $(INSTALL_DIR) $(1)/etc/init.d
+        $(INSTALL_BIN) ./files/wp-simple-init.sh $(1)/etc/init.d/wp-simple-init
 endef
+
 $(eval $(call BuildPackage,wp_module))
