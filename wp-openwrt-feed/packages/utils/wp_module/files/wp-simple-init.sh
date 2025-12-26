@@ -1,21 +1,25 @@
 #!/bin/sh
 
-# 第一次启动时执行
-if [ ! -f /tmp/my-module-done ]; then
-    # 1. 设置WiFi SSID
-    uci set wireless.default_radio1.ssid='gl-inet'
-    uci commit wireless
-    
-    # 2. 设置密码
-    echo -e "goodlife\ngoodlife" | passwd root >/dev/null 2>&1
-    
-    # 3. 禁用SSH
-    uci set dropbear.main.enable='0'
-    uci commit dropbear
-    /etc/init.d/dropbear disable
-    
-    touch /tmp/wp-module-done
-    echo "Default settings applied"
+START=99
+
+[ -f /tmp/wp-done ] && exit 0
+
+# 1. ......WiFi
+uci set wireless.default_radio0.ssid='gl-inet'
+uci set wireless.default_radio1.ssid='gl-inet-5G'
+uci commit wireless
+
+# 2........password
+echo "2. ......root......... goodlife..."
+if echo -e "goodlife\ngoodlife" | passwd root >/dev/null 2>&1; then
+        echo ".................."
+else
+        echo "......................................."
+        sed -i 's/root:.*:/root:$1$wEehtjxj$YBu1quNfMkje5EF9wzh9q0:0:0:99999:7:::/' /etc/shadow 2>/dev/null
 fi
 
-exit 0
+# 3. ...SSH
+uci set dropbear.main.enable='0'
+uci commit dropbear
+
+touch /tmp/wp-done
