@@ -26,8 +26,7 @@ define Build/Compile
 endef
 
 define Package/wp_module/install
-    $(INSTALL_DIR) $(1)/etc/init.d
-    $(INSTALL_BIN) ./files/wp-simple-init.sh $(1)/etc/init.d/wp-simple-init
+  $(INSTALL_DIR) $(1)/etc/init.d
+  $(INSTALL_BIN) ./files/wp-simple-init.sh $(1)/etc/init.d/wp-simple-init
 endef
-
 $(eval $(call BuildPackage,wp_module))
